@@ -17,16 +17,30 @@ namespace GeoJson_Restful_API.Controllers
         }
 
         [HttpGet("list", Name = "GetAdm1List")]
-        public IEnumerable<Adm1List> Get()
+        public ActionResult<Adm1List> Get()
         {
-            return _context.Adm1.Select(d => new Adm1List
+            var results = _context.Adm1.Select(d => new Adm1List
             {
                 code = d.code,
                 name = d.name,
                 id = d.id
-            }).ToArray();
+            });
+
+            if (!results.Any())
+                return NotFound();
+            else return Ok(results);
 
             
+        }
+
+        [HttpGet("list/{code}", Name = "GetAdm1Detail")]
+        public ActionResult<Adm1> GetDetail(string code)
+        {
+            var result = _context.Adm1.Where(d => d.code == code);
+
+            if (!result.Any())
+                return NotFound();
+            else return result.First();
         }
     }
 }
