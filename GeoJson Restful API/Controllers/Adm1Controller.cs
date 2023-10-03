@@ -33,7 +33,7 @@ namespace GeoJson_Restful_API.Controllers
             
         }
 
-        [HttpGet("list/{code}", Name = "GetAdm1Detail")]
+        [HttpGet("{code}", Name = "GetAdm1Detail")]
         public ActionResult<Adm1> GetDetail(string code)
         {
             var result = _context.Adm1.Where(d => d.code == code);
